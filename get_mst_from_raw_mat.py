@@ -2,7 +2,10 @@ import sys
 import argparse
 
 import numpy as np
-import graph_tool.all as gt
+#import graph_tool.all as gt
+from graph_tool.topology import label_largest_component, min_spanning_tree
+
+
 
 from connectivtyUtilsPA import readRawData, matrixToGraph
 
@@ -36,7 +39,7 @@ Intended for use with UNC AAL based regions in the tractography.
 
   # Expect 90 nodes, 8 of which are subcortical so that they are 
   # disconnected. This leaves 82 for the largest component
-  lcomp = gt.label_largest_component(G)
+  lcomp = label_largest_component(G)
 
   # Filter the graph so we only consider the 82 cortical nodes.
   G.set_vertex_filter(lcomp)
@@ -54,7 +57,7 @@ Intended for use with UNC AAL based regions in the tractography.
   w2prop.a = w2
   
     
-  mst = gt.min_spanning_tree(G, weights=w2prop)
+  mst = min_spanning_tree(G, weights=w2prop)
   
   treeW = 0.0
   
