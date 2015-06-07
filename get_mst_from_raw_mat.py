@@ -62,7 +62,9 @@ Intended for use with UNC AAL based regions in the tractography.
 
   for e in G.edges():
     if mst[e]:
+      s,t = e.source(), e.target()
       treeW += propW[e]
+      mstMat[s,t] = 1
 
       
   print 'Total weight for MST = ', 
