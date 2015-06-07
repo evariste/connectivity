@@ -1,15 +1,10 @@
 import sys
 import argparse
 
-
 import numpy as np
 import graph_tool.all as gt
 
-
-from connectivtyUtilsPA import readRawData
-from connectivtyUtilsPA import matrixToGraph
-
-from matplotlib import pyplot as plt
+from connectivtyUtilsPA import readRawData, matrixToGraph
 
 def main(*args):
   
@@ -17,6 +12,8 @@ def main(*args):
 Read a given raw matrix file from a tractography and find the minimum
 spanning tree (MST). Save the MST to a numpy array with
 the given output name.
+
+Intended for use with UNC AAL based regions in the tractography.
 '''
   
   parser = argparse.ArgumentParser(description=helpText) 
@@ -47,7 +44,7 @@ the given output name.
   nVertices = G.num_vertices()
   nEdges = G.num_edges()
 
-  print nVertices, nEdges
+  print '(nodes, edges) in largest component : (' , nVertices, ', ', nEdges , ')'
   
   propW = G.edge_properties['weight']
   w = propW.a
@@ -61,26 +58,22 @@ the given output name.
   
   treeW = 0.0
   
-  temp = 0.0
-  
   mstMat = np.zeros(data.shape)
 
   for e in G.edges():
     if mst[e]:
-      s,t = e.source(), e.target()
       treeW += propW[e]
-      mstMat[s,t] = 1
-      
-      temp += data[s,t]
 
       
-  print treeW
-  print temp
+  print 'Total weight for MST = ', 
+  print '{:0.3f}'.format(treeW)
   
+  print 'Weights obtained for ten random sets of ', nVertices-1, ' edges'
+
   temp = data[data > 0]
   for _ in range(10):
     ix = np.random.randint(0, nEdges, size=nVertices-1)
-    print np.sum(temp[ix])
+    print '{:0.3f} '.format( np.sum(temp[ix]) ),
   
   
 
@@ -88,9 +81,6 @@ the given output name.
   np.save(outputName, mstMat)
 
 
-  temp = np.load(outputName)
-  plt.imshow(temp,interpolation='nearest')
-  plt.show()
 
 
 if __name__ == '__main__':
