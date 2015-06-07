@@ -2,7 +2,6 @@ import sys
 import argparse
 
 import numpy as np
-#import graph_tool.all as gt
 from graph_tool.topology import label_largest_component, min_spanning_tree
 
 
