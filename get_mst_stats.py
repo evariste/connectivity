@@ -63,7 +63,7 @@ randomLabels-250  randomLabels-282 unc-aal unc-aal-with-subcort
 
     dataFile = (workDir + '/' + id + '/' + tractSubDir +
                  '/' + region_def +
-                 '/anisotropy/mst.npy')
+                 '/' + measure + '/mst.npy')
 
     mstArr = np.load(dataFile)
     sumArr = sumArr + mstArr
