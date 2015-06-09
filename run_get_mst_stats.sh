@@ -5,8 +5,8 @@
 # Script to perform modified probtrackx tractography
 
 
-envScript='/Users/paulaljabar/work/scripts/python/pythonEnvs/surfaceAnalysis/bin/activate'
-# envScript='/projects/perinatal/peridata/paul/packages/python/envPA/bin/activate'
+# envScript='/Users/paulaljabar/work/scripts/python/pythonEnvs/surfaceAnalysis/bin/activate'
+envScript='/projects/perinatal/peridata/paul/packages/python/envPA/bin/activate'
 
 source $envScript
 

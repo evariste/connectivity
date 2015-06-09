@@ -3,12 +3,11 @@ import sys, argparse
 
 import numpy as np
 
-rootDir = '/Users/paulaljabar/work/cdb/e-prime/from-peridata'
+rootDir = '/projects/perinatal/peridata'
 workDir = rootDir + '/paul/EPRIME'
 
 tractSubDir = '001_diffusion_data/tractography/tracts'
 
-temp = 'EP1009/001_diffusion_data/tractography/tracts/unc-aal/anisotropy/mst.npy'
 
 def main(*args):
   
@@ -65,8 +64,6 @@ randomLabels-250  randomLabels-282 unc-aal unc-aal-with-subcort
     dataFile = (workDir + '/' + id + '/' + tractSubDir +
                  '/' + region_def +
                  '/anisotropy/mst.npy')
-
-    print dataFile
 
     mstArr = np.load(dataFile)
     sumArr = sumArr + mstArr

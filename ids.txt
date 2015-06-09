@@ -1,4 +1,3 @@
-Lines starting with # are ignored.
 EP1009
 EP1017
 EP1041
