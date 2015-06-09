@@ -98,13 +98,14 @@ Intended for use with UNC AAL based regions in the tractography.
 
   mstMat = np.zeros(data.shape)
   
+  allWeights = np.zeros(nReps)
+
   for i in range(nReps):
     noiseVals = 2.0 * width * (np.random.rand(nEdges) - 0.5 )
     w2propNoise.a = w2 + noiseVals
     mst = min_spanning_tree(G, weights=w2propNoise)
   
     treeW = 0.0
-  
 
     for e in G.edges():
       if mst[e]:
@@ -112,9 +113,10 @@ Intended for use with UNC AAL based regions in the tractography.
         treeW += propW[e]
         mstMat[s,t] += 1
 
-      
-    print 'Total weight for MST = ',
-    print '{:0.3f}'.format(treeW)
+    allWeights[i] = treeW
+
+  print 'Average (STD) of weights for MSTs = ',
+  print '{:0.3f} (:0.3f)'.format(np.mean(allWeights), np.std(allWeights))
   
   np.save(outputName, mstMat)
 
