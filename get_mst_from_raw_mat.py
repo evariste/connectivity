@@ -116,7 +116,7 @@ Intended for use with UNC AAL based regions in the tractography.
     allWeights[i] = treeW
 
   print 'Average (STD) of weights for MSTs = ',
-  print '{:0.3f} (:0.3f)'.format(np.mean(allWeights), np.std(allWeights))
+  print '{:0.3f} ({:0.3f})'.format(np.mean(allWeights), np.std(allWeights))
   
   np.save(outputName, mstMat)
 
