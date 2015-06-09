@@ -62,17 +62,26 @@ Intended for use with UNC AAL based regions in the tractography.
   print '(nodes, edges) in largest component : (' , nVertices, ', ', nEdges , ')'
 
   if width < 0:
+
     temp = np.tri(data.shape[0])
     temp = temp * data
     temp = temp[temp > 0]
 
     nVals = temp.size
-    diffs = np.zeros(nVals * (nVals-1) / 2)
+    # How many comparisons? Max 1 million.
+    nComps = np.min([1000000, nVals * (nVals-1) / 2])
+    diffs = np.zeros(nComps)
+
     n = 0
-    for i in range(nVals-1):
-      for j in range(i+1, nVals):
+    i = 0
+    while (n < nComps) and (i < nVals-1):
+      j = i + 1
+      while (n < nComps) and (j < nVals):
         diffs[n] = np.fabs( temp[i] - temp[j] )
         n += 1
+        j += 1
+
+      i += 1
 
     width = np.percentile(diffs, 5)
 
