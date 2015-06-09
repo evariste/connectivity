@@ -3,6 +3,12 @@ mst_example.py
 scratch.ipynb
 temp.py
 
+*.npy
+*.raw
+
+scratch.*
+
+*.~
 
 .ipynb_checkpoints/
 .project
