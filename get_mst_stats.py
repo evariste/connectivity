@@ -12,12 +12,9 @@ tractSubDir = '001_diffusion_data/tractography/tracts'
 def main(*args):
   
   helpText = '''
-Find the number of times an edge appears in the minimum
-spanning trees of a set of tractographies for the e-prime
-group.
-
+Sum the minimum spanning tree derived matrices for the e-prime group.
+The MST matrices are derived from tractographies.
 Need to specify which region definition is being used:
-
 randomLabels-250  randomLabels-282 unc-aal unc-aal-with-subcort
 
 
@@ -49,22 +46,20 @@ randomLabels-250  randomLabels-282 unc-aal unc-aal-with-subcort
 
   ids = map(lambda s: s[:-1], f.readlines())
 
+  mstPath = (tractSubDir +
+             '/' + region_def +
+             '/' + measure + '/mst.npy')
+
   # Get size from first in list.
-  dataFile = (workDir + '/' + ids[0] + '/' + tractSubDir +
-               '/' + region_def +
-               '/' + measure + '/mst.npy')
+  dataFile = (workDir + '/' + ids[0] + '/' + mstPath)
 
   temp = np.load(dataFile)
   sumArr = np.zeros(temp.shape)
 
-
   for id in ids:
     print id
 
-    dataFile = (workDir + '/' + id + '/' + tractSubDir +
-                 '/' + region_def +
-                 '/' + measure + '/mst.npy')
-
+    dataFile = (workDir + '/' + id + '/' + mstPath)
     mstArr = np.load(dataFile)
     sumArr = sumArr + mstArr
 
