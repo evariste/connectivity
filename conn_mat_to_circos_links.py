@@ -41,8 +41,7 @@ def main(*args):
   threshold = args.threshold
   
   print 'Threshold at ', threshold
-  
-  
+
 
   f = open(lutFile)  
   lines = map(lambda s: s[:-1], f.readlines())
