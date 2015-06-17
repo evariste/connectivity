@@ -60,9 +60,7 @@ def main(*args):
     labelIndex = labelNumber - 1
     side[labelIndex] = fields[3]
     shortName[labelIndex] = fields[5]
-    
-   
-    
+
   
   mat = np.load(connMatFile)
 
