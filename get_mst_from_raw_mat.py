@@ -2,7 +2,7 @@ import sys
 import argparse
 
 import numpy as np
-from graph_tool.topology import label_largest_component, min_spanning_tree
+from graph_tool.topology import label_largest_component, min_spanning_tree, label_components
 
 from connectivtyUtilsPA import readRawData, matrixToGraph
 
@@ -38,28 +38,52 @@ Intended for use with UNC AAL based regions in the tractography.
   helpText = 'noise level: (default) -1 -> estimate from data, 0 or higher, use given value'
   parser.add_argument('-noise', type=float, help=helpText, default=-1)
 
+  helpText = 'Number of components: How many of the components of the graph to keep, starting with largest'
+  parser.add_argument('-comps', type=int, help=helpText, default=1)
+
   args = parser.parse_args()
 
   filename = args.filename
   outputName = args.output
   nReps = args.reps
   width = args.noise
+  compsRequired = args.comps
   
-  data = readRawData(filename)
+
+  if filename[-4:] == '.raw':
+    # Raw format
+    data = readRawData(filename)
+  elif filename[-4:] == '.npy':
+    # Numpy array
+    data = np.load(filename)
+
 
   G = matrixToGraph(data)
 
-  # Expect 90 nodes, 8 of which are subcortical so that they are 
-  # disconnected. This leaves 82 for the largest component
-  lcomp = label_largest_component(G)
 
-  # Filter the graph so we only consider the 82 cortical nodes.
-  G.set_vertex_filter(lcomp)
+  # Expect 90 nodes, 8 of which are subcortical, these and other ones
+  # may be disconnected. By default select the largest connected
+  # component but may select further ones if we want to work with a
+  # multi-component graph.
+
+  comp, hist = label_components(G)
+
+  vprop = G.new_vertex_property('bool')
+  proparr = np.zeros((G.num_vertices(),), dtype='bool')
+
+  compOrder = np.argsort(hist)
+  for i in range(compsRequired):
+    j = compOrder[-1-i]
+    proparr[comp.a == j] = True
+    
+  vprop.a = proparr
+  G.set_vertex_filter(vprop)
+
 
   nVertices = G.num_vertices()
   nEdges = G.num_edges()
 
-  print '(nodes, edges) in largest component : (' , nVertices, ', ', nEdges , ')'
+  print '(nodes, edges) in selected component(s) : (' , nVertices, ', ', nEdges , ')'
 
   if width < 0:
 
