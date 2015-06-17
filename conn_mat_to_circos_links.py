@@ -72,20 +72,26 @@ def main(*args):
   # Links file has format
   
   # hemisphere parcelation hemisphere parcelation connection_type connection_score
-  # Eg.     r FSup l Hip 1 0.5
-  fmtOut = '{:s} {:s} {:s} {:s} 1 {:0.2f}\n'
+  # Eg.     r FSup l Hip 1 0.512
+  fmtOut = '{:s} {:s} {:s} {:s} 1 {:0.3f}\n'
   
   maxVal = np.max(mat)
-  
-  
-  for i in range(nNodes-1):
+
+
+  for i in range(nNodes):
     srcName = shortName[i]
     srcSide = side[i]
-    for j in range(i+1, nNodes):
+
+    for j in range(nNodes):
+      if i == j:
+        continue
+
       val = mat[i,j]
+
       if val > threshold:
         tgtName = shortName[j]
         tgtSide = side[j]
+
         strOut = fmtOut.format(srcSide, srcName, tgtSide, tgtName, val/maxVal)
         fOut.write( strOut )
     
