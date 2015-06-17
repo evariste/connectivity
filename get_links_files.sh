@@ -14,13 +14,17 @@ min_num_args=2
 if [ ! $# -ge $min_num_args ]; then
   echo "  Usage $0 [input] [outputBasename] <-threshold value>
 
-  Generate circos plots (svg and png) for given input connectivity file.
+  Generate circos plots (svg and png) for given input connectivity file (Numpy format).
+
   Given input.npy, provide outputBasename.{png,svg}, images for the 
   connectogram. 
 
-Assumes the regions for the AAL regions 1 to 90.
+  Assumes the regions for the AAL regions 1 to 90.
 
-Default threshold for selecting links is 0 unless specified.
+  Default threshold for selecting links is 0 unless specified.
+
+  Threshold - Need to fix so that only edges with a probability of MST
+  selection greater than, say, 25% are retained
 
 "
   exit
@@ -56,8 +60,6 @@ echo "Setting threshold to $threshold"
 
 linkFile=${input/.npy/-links.txt}
 
-# Threshold - Need to fix so that only edges with a probability of MST
-# selection greater than, say, 25% are retained
 
 cmd="python $SCRIPTDIR/conn_mat_to_circos_links.py \
  $input $labelLookup $linkFile -threshold $threshold"
@@ -65,7 +67,7 @@ cmd="python $SCRIPTDIR/conn_mat_to_circos_links.py \
 echo $cmd
 eval $cmd 
 
-cmd="cp $linkFile $circosWorkDir/"
+cmd="cp $linkFile $circosWorkDir/maps.links.txt"
 echo $cmd
 eval $cmd
 
