@@ -34,13 +34,19 @@ randomLabels-250  randomLabels-282 unc-aal unc-aal-with-subcort
 
   helpText = 'Output numpy array for MST summary data'
   parser.add_argument('output', type=str, help=helpText)
+
+  helpText = 'input name of individual MST files (numpy array)'
+  parser.add_argument('input', type=str, help=helpText)
+
   
+
   args = parser.parse_args()
 
   region_def = args.region_def
   measure = args.measure
   idFile = args.id_list
   outputFile = args.output
+  mstFilename = args.input
 
   f = open(idFile)
 
@@ -48,7 +54,8 @@ randomLabels-250  randomLabels-282 unc-aal unc-aal-with-subcort
 
   mstPath = (tractSubDir +
              '/' + region_def +
-             '/' + measure + '/mst.npy')
+             '/' + measure + '/' +
+             mstFilename)
 
   # Get size from first in list.
   dataFile = (workDir + '/' + ids[0] + '/' + mstPath)
