@@ -40,6 +40,7 @@ for labelSet in $labelNames
 do 
     currDir=${tractDir}/${labelSet}
 
+    # Get MST in I-C representation.
     dataFile=${currDir}/anisotropy/ipsi-con.npy
     mstFile=${currDir}/anisotropy/mst-ipsi-con.npy
 
@@ -48,6 +49,14 @@ do
     eval ${command}
     echo
 
+    # Recover MST in ordinary connectivity representation
+    mstFileRecovered=${mstFile/.npy/-recover.npy}
+    command="python ipsi_contra_to_conn_mat.py ${mstFile} ${mstFileRecovered}"
+    echo ${command}
+    eval ${command}
+    echo
+
+    # Get MST in I-C representation.
     dataFile=${currDir}/probability/ipsi-con.npy
     mstFile=${currDir}/probability/mst-ipsi-con.npy
 
@@ -55,6 +64,14 @@ do
     echo ${command}
     eval ${command}
     echo
+
+    # Recover MST in ordinary connectivity representation
+    mstFileRecovered=${mstFile/.npy/-recover.npy}
+    command="python ipsi_contra_to_conn_mat.py ${mstFile} ${mstFileRecovered}"
+    echo ${command}
+    eval ${command}
+    echo
+
 
 done
 
