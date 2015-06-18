@@ -71,6 +71,8 @@ Intended for use with UNC AAL based regions in the tractography.
   vprop = G.new_vertex_property('bool')
   proparr = np.zeros((G.num_vertices(),), dtype='bool')
 
+  print 'Selecting', compsRequired, 'components'
+
   compOrder = np.argsort(hist)
   for i in range(compsRequired):
     j = compOrder[-1-i]
@@ -111,7 +113,9 @@ Intended for use with UNC AAL based regions in the tractography.
 
   print 'adding noise with width ', width
   print 'repeating ', nReps, ' times'
-  
+
+  # Invert the connection strengths so that smaller is better. I.e. a
+  # MST has strong edges.
   propW = G.edge_properties['weight']
   w = propW.a
   wMax = np.max(w) 
