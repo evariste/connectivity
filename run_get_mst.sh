@@ -45,7 +45,7 @@ do
     dataFile=${currDir}/anisotropy/*.raw
     mstFile=${currDir}/anisotropy/mst.npy
 
-    command="python get_mst_from_raw_mat.py ${dataFile} ${mstFile} "
+    command="python conn_mat_to_mst.py ${dataFile} ${mstFile} "
     echo ${command}
     eval ${command}
     echo
@@ -53,7 +53,7 @@ do
     dataFile=${currDir}/probability/*.raw
     mstFile=${currDir}/probability/mst.npy
 
-    command="python get_mst_from_raw_mat.py ${dataFile} ${mstFile} "
+    command="python conn_mat_to_mst.py ${dataFile} ${mstFile} "
     echo ${command}
     eval ${command}
     echo
