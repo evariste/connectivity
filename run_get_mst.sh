@@ -1,10 +1,5 @@
 #!/bin/bash
 
-
-
-# Script to perform modified probtrackx tractography
-
-
 ## USAGE:
 min_num_args=1
 if [ ! $# -ge $min_num_args ]; then
