@@ -17,25 +17,55 @@ export PYTHONPATH=${pyUtilDir}:${PYTHONPATH}
 
 idFile='ids.txt'
 
-labelNames="randomLabels-250  randomLabels-282 unc-aal unc-aal-with-subcort"
-
 measures="anisotropy probability"
 
-for labelSet in $labelNames
-do
+run_for_conn_mats()
+{
+    labelNames="randomLabels-250  randomLabels-282 unc-aal unc-aal-with-subcort"
 
-    for measure in $measures
+    for labelSet in $labelNames
     do
-	output="output/mst-stats-$labelSet-$measure"
 
-	command="python get_mst_stats.py $labelSet $measure $idFile $output"
+	for measure in $measures
+	do
+	    output="output/mst-stats-$labelSet-$measure"
+	    command="python get_mst_stats.py $labelSet $measure $idFile $output mst.npy"
+	    echo ${command}
+	    eval ${command}
+	    echo
+	done
 
-	echo ${command}
-	eval ${command}
-	echo
     done
+}
 
-done
+#########################################################
+
+run_for_ipsi_contra_mats()
+{
+    labelNames="unc-aal unc-aal-with-subcort"
+
+    for labelSet in $labelNames
+    do
+
+	for measure in $measures
+	do
+	    output="output/mst-stats-ic-$labelSet-$measure"
+	    command="python get_mst_stats.py \
+$labelSet $measure $idFile \
+$output mst-ipsi-con-recover.npy"
+	    echo ${command}
+	    eval ${command}
+	    echo
+	done
+
+    done
+}
+
+#########################################################
+
+#  run_for_conn_mats
+
+run_for_ipsi_contra_mats
 
 
 
