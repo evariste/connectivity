@@ -16,7 +16,6 @@ source /projects/perinatal/peridata/paul/packages/python/envPA/bin/activate
 
 export PYTHONPATH=/projects/perinatal/peridata/paul/scripts/python_scripts:${PYTHONPATH}
 
-
 SCRIPTDIR="/projects/perinatal/peridata/paul/tractography/connectivity"
 DATADIR="/projects/perinatal/peridata/EPRIME"
 WORKDIR="/projects/perinatal/peridata/paul/EPRIME"
