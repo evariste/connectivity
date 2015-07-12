@@ -26,7 +26,7 @@ Intended for use with UNC AAL based regions in the tractography.
   parser = argparse.ArgumentParser(description=helpText) 
   # ,formatter_class=argparse.RawTextHelpFormatter)
   
-  helpText = 'raw matrix file'
+  helpText = 'Connectivity matrix file, .raw or .npy format'
   parser.add_argument("filename", type=str, help=helpText)
 
   helpText = 'Output numpy array for MST'
