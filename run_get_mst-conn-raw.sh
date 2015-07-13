@@ -29,7 +29,7 @@ tractDir=${WORKDIR}/${id}/001_diffusion_data/tractography/tracts
 
 
 labelNames="randomLabels-250  randomLabels-282 unc-aal unc-aal-with-subcort"
-
+labelNames="unc-aal-both unc-aal-with-subcort-both"
 
 
 for labelSet in $labelNames
@@ -37,6 +37,9 @@ do
     currDir=${tractDir}/${labelSet}
 
     dataFile=${currDir}/anisotropy/*.raw
+    # For combined unc and reflected data, the output is in numpy format
+    dataFile=${currDir}/anisotropy/anisotropy.npy
+
     mstFile=${currDir}/anisotropy/mst.npy
 
     command="python conn_mat_to_mst.py ${dataFile} ${mstFile} "
@@ -44,13 +47,14 @@ do
     eval ${command}
     echo
 
-    dataFile=${currDir}/probability/*.raw
-    mstFile=${currDir}/probability/mst.npy
+    # probability data gives non-informative connectivity
+    # dataFile=${currDir}/probability/*.raw
+    # mstFile=${currDir}/probability/mst.npy
 
-    command="python conn_mat_to_mst.py ${dataFile} ${mstFile} "
-    echo ${command}
-    eval ${command}
-    echo
+    # command="python conn_mat_to_mst.py ${dataFile} ${mstFile} "
+    # echo ${command}
+    # eval ${command}
+    # echo
 
 done
 
