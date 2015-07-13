@@ -52,7 +52,7 @@ Intended for use with UNC AAL based regions in the tractography.
 
   if filename[-4:] == '.raw':
     # Raw format
-    data = readRawData(filename)
+    data = readRawData(filename, symmetric=True)
   elif filename[-4:] == '.npy':
     # Numpy array
     data = np.load(filename)
@@ -117,7 +117,14 @@ Intended for use with UNC AAL based regions in the tractography.
   # Invert the connection strengths so that smaller is better. I.e. a
   # MST has strong edges.
   propW = G.edge_properties['weight']
-  w = propW.a
+  w = np.asarray(propW.a, dtype=np.float64)
+
+  print 'Average (STD) of edge weights [nVertices-1 x average weight = expected tree weight] ',
+  meanW = np.mean(w)
+  stdW = np.std(w)
+  eTreeWeight = meanW * float(nVertices - 1)
+  print '{:0.3f} ({:0.3f})  [{:0.3f}]'.format(meanW, stdW, eTreeWeight)
+
   wMax = np.max(w) 
   w2 = (0.1 * wMax) + (wMax - w)
   w2prop = G.new_edge_property('double')
