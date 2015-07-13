@@ -10,8 +10,8 @@ WORKDIR="${ROOTDIR}/paul/EPRIME"
 
 tractPath='001_diffusion_data/tractography/tracts'
 
-#envScript='/Users/paulaljabar/work/scripts/python/pythonEnvs/surfaceAnalysis/bin/activate'
-envScript='${ROOTDIR}/paul/packages/python/envPA/bin/activate'
+#envScript="/Users/paulaljabar/work/scripts/python/pythonEnvs/surfaceAnalysis/bin/activate"
+envScript="${ROOTDIR}/paul/packages/python/envPA/bin/activate"
 
 source $envScript
 
@@ -47,7 +47,7 @@ do
 
 
 	    command="python conn_mat_maths.py $fileA add $fileB $fileOut"
-	    echo ${command}
+	    echo "$ID $labelSet $measure"
 	    eval ${command}
 	    echo
 	done
