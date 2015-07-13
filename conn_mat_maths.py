@@ -44,14 +44,14 @@ def main(*args):
 
   if filenameA[-4:] == '.raw':
     # Raw format
-    dataA = readRawData(filenameA)
+    dataA = readRawData(filenameA, symmetric=False)
   elif filenameA[-4:] == '.npy':
     # Numpy array
     dataA = np.load(filenameA)
 
   if filenameB[-4:] == '.raw':
     # Raw format
-    dataB = readRawData(filenameB)
+    dataB = readRawData(filenameB, symmetric=False)
   elif filenameB[-4:] == '.npy':
     # Numpy array
     dataB = np.load(filenameB)
