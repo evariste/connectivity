@@ -22,7 +22,7 @@ SCRIPTA='run_get_mst-conn-raw.sh'
 SCRIPTB='run_get_mst-ipsi_contra.sh'
 
 # Choice!
-SCRIPT=$SCRIPTB
+SCRIPT=$SCRIPTA
 
 while read id
 do
